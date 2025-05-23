@@ -6,7 +6,7 @@ import { fetchFile, toBlobURL } from '@ffmpeg/util'; // toBlobURL 不再需要�
 // @ffmpeg/core-mt@xxx/ is not work in Vercel. the root cause is unknown. @ffmpeg/core-mt@xxx is work in Dev environment
 // so load https://unpkg.com/@ffmpeg/core@0.12.10 and https://unpkg.com/@ffmpeg/core-mt@0.12.10 for ffmpeg-core and ffmpeg-mt folder
 
-const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/esm';
+const baseURL = 'https://unpkg.com/@ffmpeg/core-mt@0.12.10/dist/esm';
 
 export const AudioExtractor = () => {
   const [ffmpegSignal] = createSignal(new FFmpeg()); // Renamed to avoid conflict if FFmpeg class is used elsewhere in scope
@@ -24,6 +24,10 @@ export const AudioExtractor = () => {
               wasmURL: await toBlobURL(
                 `${baseURL}/ffmpeg-core.wasm`,
                 'application/wasm'
+              ),
+              workerURL: await toBlobURL(
+                `${baseURL}/ffmpeg-core.worker.js`,
+                'text/javascript'
               )
             }
           );
